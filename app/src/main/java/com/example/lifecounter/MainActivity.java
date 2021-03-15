@@ -15,6 +15,7 @@ import android.view.animation.Animation;
 import android.view.animation.AnimationSet;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
@@ -64,6 +65,8 @@ public class MainActivity extends AppCompatActivity {
     Button buttonResume;
     Button buttonPassTurnP1;
     Button buttonPassTurnP2;
+    ImageButton buttonTimerUp;
+    ImageButton buttonTimerDown;
     private int turn = 0;
 
     public int p1Minutes;
@@ -133,6 +136,10 @@ public class MainActivity extends AppCompatActivity {
         p2Seconds = Integer.parseInt(countDownP1Array[1]);
         p2Time = p2Minutes * 60000;
 
+        buttonTimerUp = findViewById(R.id.timerUp);
+        buttonTimerDown = findViewById(R.id.timerDown);
+
+
         //Progress bar set up
         progressBarP1 = findViewById(R.id.progressBar_Player1);
         progressBarP1.setMax((int) p1Time);
@@ -173,6 +180,8 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View v) {
                 buttonReset.setVisibility(View.VISIBLE);
                 buttonReset.setEnabled(true);
+                buttonTimerDown.setVisibility(View.INVISIBLE);
+                buttonTimerUp.setVisibility(View.INVISIBLE);
                 if (turn == 0){
                     button2.setText("END PHASE");
                     button1.setText("END PHASE");
@@ -263,6 +272,8 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View v) {
                 buttonReset.setVisibility(View.VISIBLE);
                 buttonReset.setEnabled(true);
+                buttonTimerDown.setVisibility(View.INVISIBLE);
+                buttonTimerUp.setVisibility(View.INVISIBLE);
                 if (turn == 0){
                     button2.setText("END PHASE");
                     button1.setText("END PHASE");
@@ -754,105 +765,21 @@ public class MainActivity extends AppCompatActivity {
         buttonReset.setEnabled(false);
         buttonReset.setVisibility(View.INVISIBLE);
 
+        buttonTimerDown.setVisibility(View.VISIBLE);
+        buttonTimerUp.setVisibility(View.VISIBLE);
     }
 
-    private int garbage = 1;
-    public void proceedPhase(){
-
-            garbage++;
-
-    if(garbage%2==0) {
-        if (turn == 1 && phaseTracker == 6){
-            
-        }
-        else    phaseTracker = phaseTracker - 1;
-
-
-
-        if (phaseTracker == 11) {
-            phaseTracker = 1;
-        }
-        switch (phaseTracker) {
-            case 1:
-                endStepP2.setAlpha(0.3f);
-                pcMainPhaseP2.setAlpha(0.3f);
-                upkeepP1.setAlpha(1f);
-                mainPhaseP1.setAlpha(0.3f);
-                combatPhaseP1.setAlpha(0.3f);
-                pcMainPhaseP1.setAlpha(0.3f);
-                endStepP1.setAlpha(0.3f);
-                break;
-            case 2:
-                upkeepP1.setAlpha(0.3f);
-                mainPhaseP1.setAlpha(1f);
-                combatPhaseP1.setAlpha(0.3f);
-                pcMainPhaseP1.setAlpha(0.3f);
-                endStepP1.setAlpha(0.3f);
-                break;
-            case 3:
-                upkeepP1.setAlpha(0.3f);
-                mainPhaseP1.setAlpha(0.3f);
-                combatPhaseP1.setAlpha(1f);
-                pcMainPhaseP1.setAlpha(0.3f);
-                endStepP1.setAlpha(0.3f);
-                break;
-            case 4:
-                upkeepP1.setAlpha(0.3f);
-                mainPhaseP1.setAlpha(0.3f);
-                combatPhaseP1.setAlpha(0.3f);
-                pcMainPhaseP1.setAlpha(1f);
-                endStepP1.setAlpha(0.3f);
-                break;
-            case 5:
-                upkeepP1.setAlpha(0.3f);
-                mainPhaseP1.setAlpha(0.3f);
-                combatPhaseP1.setAlpha(0.3f);
-                pcMainPhaseP1.setAlpha(0.3f);
-                endStepP1.setAlpha(1f);
-                break;
-            case 6:
-                endStepP1.setAlpha(0.3f);
-                pcMainPhaseP1.setAlpha(0.3f);
-                upkeepP2.setAlpha(1f);
-                mainPhaseP2.setAlpha(0.3f);
-                combatPhaseP2.setAlpha(0.3f);
-                pcMainPhaseP2.setAlpha(0.3f);
-                endStepP2.setAlpha(0.3f);
-                break;
-            case 7:
-                upkeepP2.setAlpha(0.3f);
-                mainPhaseP2.setAlpha(1f);
-                combatPhaseP2.setAlpha(0.3f);
-                pcMainPhaseP2.setAlpha(0.3f);
-                endStepP2.setAlpha(0.3f);
-                break;
-            case 8:
-                upkeepP2.setAlpha(0.3f);
-                mainPhaseP2.setAlpha(0.3f);
-                combatPhaseP2.setAlpha(1f);
-                pcMainPhaseP2.setAlpha(0.3f);
-                endStepP2.setAlpha(0.3f);
-                break;
-            case 9:
-                upkeepP2.setAlpha(0.3f);
-                mainPhaseP2.setAlpha(0.3f);
-                combatPhaseP2.setAlpha(0.3f);
-                pcMainPhaseP2.setAlpha(1f);
-                endStepP2.setAlpha(0.3f);
-                break;
-            case 10:
-                upkeepP2.setAlpha(0.3f);
-                mainPhaseP2.setAlpha(0.3f);
-                combatPhaseP2.setAlpha(0.3f);
-                pcMainPhaseP2.setAlpha(0.3f);
-                endStepP2.setAlpha(1f);
-                break;
-        }
-
+    public void player1TimeUp(View view){
+        p1Time = p1Time + 60000;
+        p2Time = p2Time + 60000;
+        countDownP1Text.setText(updateText(p1Time));
+        countDownP2Text.setText(updateText(p2Time));
     }
-
-
-
+    public void player1TimeDown(View view){
+        p1Time = p1Time - 60000;
+        p2Time = p2Time - 60000;
+        countDownP1Text.setText(updateText(p1Time));
+        countDownP2Text.setText(updateText(p2Time));
 
     }
 
