@@ -3,18 +3,11 @@ package com.example.lifecounter;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.graphics.Color;
-import android.media.Image;
 import android.os.Bundle;
 import android.os.CountDownTimer;
-import android.util.Log;
 import android.view.View;
 import android.view.WindowManager;
-import android.view.animation.AccelerateInterpolator;
-import android.view.animation.AlphaAnimation;
-import android.view.animation.Animation;
-import android.view.animation.AnimationSet;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
@@ -42,8 +35,7 @@ public class MainActivity extends AppCompatActivity {
     private ImageView pcMainPhaseP2;
     private ImageView endStepP2;
 
-    private int phaseTracker;
-    private double phaseTracker2 = 0;
+    private double phaseTracker = 0;
 
     //dice set up
     private Random rng = new Random();
@@ -141,6 +133,7 @@ public class MainActivity extends AppCompatActivity {
          */
         p2Time = original;
 
+        //--> findViewElementsById()
         buttonTimerUp = findViewById(R.id.timerUp);
         buttonTimerDown = findViewById(R.id.timerDown);
 
@@ -192,8 +185,8 @@ public class MainActivity extends AppCompatActivity {
                 if (turn == 0){
                     button2.setText("END PHASE");
                     button1.setText("END PHASE");
-                    phaseTracker2 = 1;
-                    proceedPhase2();
+                    phaseTracker = 1;
+                    proceedPhase();
                     buttonPassTurnP2.setEnabled(false);
                     buttonPassTurnP1.setEnabled(false);
                     buttonPassTurnP1.setTextColor(Color.parseColor("#000000"));
@@ -204,11 +197,11 @@ public class MainActivity extends AppCompatActivity {
                 }
                 //if game is going on do the following
                 else {
-                    phaseTracker2 = phaseTracker2 + 0.5;
-                    proceedPhase2();
+                    phaseTracker = phaseTracker + 0.5;
+                    proceedPhase();
                 }
                 //if turn player 2
-                if (turn != 0 && phaseTracker2 >= 5){
+                if (turn != 0 && phaseTracker >= 5){
                     buttonPassTurnP2.setEnabled(false);
                     //buttonPassTurnP1.setEnabled(true);
                     //buttonPassTurnP1.setTextColor(Color.parseColor("#ffffff"));
@@ -217,7 +210,7 @@ public class MainActivity extends AppCompatActivity {
                     buttonPassTurnP2.setBackgroundColor(Color.parseColor("#D3D3D3"));
                 }
                 //if turn player 1
-                if (turn != 0 && phaseTracker2 < 5){
+                if (turn != 0 && phaseTracker < 5){
                     buttonPassTurnP1.setEnabled(true);
                     buttonPassTurnP1.setTextColor(Color.parseColor("#ffffff"));
                     buttonPassTurnP1.setBackgroundColor(Color.parseColor("#6d00c1"));
@@ -236,7 +229,7 @@ public class MainActivity extends AppCompatActivity {
                     button2.setBackgroundColor(Color.parseColor("#D3D3D3"));
 
                     //start timer
-                    if (turn == 0 || turn == 2) {
+                    if (turn % 2 == 0) {
 
                         p1Timer = new CountDownTimer(p1Time, 1) {
                             @Override
@@ -286,8 +279,9 @@ public class MainActivity extends AppCompatActivity {
                 if (turn == 0){
                     button2.setText("END PHASE");
                     button1.setText("END PHASE");
-                    phaseTracker2 = 4.5;
-                    proceedPhase2();
+                    phaseTracker = 4.5;
+                    proceedPhase();
+                    //--> disable buttons player 1 / 2
                     buttonPassTurnP1.setEnabled(false);
                     buttonPassTurnP2.setEnabled(false);
                     buttonPassTurnP2.setTextColor(Color.parseColor("#000000"));
@@ -297,11 +291,11 @@ public class MainActivity extends AppCompatActivity {
                 }
                 //if game is going on do the following
                 else {
-                    phaseTracker2 = phaseTracker2 + 0.5;
-                    proceedPhase2();
+                    phaseTracker = phaseTracker + 0.5;
+                    proceedPhase();
                 }
                 //if turn player 1
-                if (turn != 0 && phaseTracker2 < 5){
+                if (turn != 0 && phaseTracker < 5){
                     buttonPassTurnP1.setEnabled(false);
                     //buttonPassTurnP2.setEnabled(true);
                     //buttonPassTurnP2.setTextColor(Color.parseColor("#ffffff"));
@@ -310,13 +304,13 @@ public class MainActivity extends AppCompatActivity {
                     buttonPassTurnP1.setBackgroundColor(Color.parseColor("#D3D3D3"));
                 }
                 //if turn player 2
-                if (turn != 0 && phaseTracker2 >= 5){
+                if (turn != 0 && phaseTracker >= 5){
                     buttonPassTurnP2.setEnabled(true);
                     buttonPassTurnP2.setTextColor(Color.parseColor("#ffffff"));
                     buttonPassTurnP2.setBackgroundColor(Color.parseColor("#6d00c1"));
                 }
 
-                if (turn != 0 && phaseTracker2 == 5.5){
+                if (turn != 0 && phaseTracker == 5.5){
                     buttonPassTurnP1.setEnabled(true);
                     buttonPassTurnP1.setTextColor(Color.parseColor("#ffffff"));
                     buttonPassTurnP1.setBackgroundColor(Color.parseColor("#6d00c1"));
@@ -334,10 +328,11 @@ public class MainActivity extends AppCompatActivity {
                     //start timer
                     if (turn == 1 || turn == 0) {
 
+                        //--> setTimerPlayer2()
+                        //--> create object player1 & 2
                         p2Timer = new CountDownTimer(p2Time, 1) {
                             @Override
                             public void onTick(long millisUntilFinished) {
-
 
                                 if (turn != 2) {    //No longer player 2's turn, stop timer
                                     cancel();
@@ -373,7 +368,6 @@ public class MainActivity extends AppCompatActivity {
 
             }
         });
-
 
         buttonPause.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -566,6 +560,7 @@ public class MainActivity extends AppCompatActivity {
         }.start();
     }
 
+    //--> put in array and loop over it
     public void hidePhases(View view){
 
         upkeepP1.animate().alpha(0f).setDuration(1000);
@@ -595,15 +590,16 @@ public class MainActivity extends AppCompatActivity {
     }
     //is only available while one player is on turn and during phase
     public void passTurn(View view){
-        if (phaseTracker2 < 5){
-            phaseTracker2 = 4.5;
-            proceedPhase2();
+
+        buttonRollDice.setVisibility(View.INVISIBLE);
+        buttonPause.setEnabled(true);
+        buttonPause.setVisibility(View.VISIBLE);
+        if (phaseTracker < 5){
+            phaseTracker = 4.5;
+            proceedPhase();
             turn = 2;
             button1.setEnabled(false);
             button2.setEnabled(true);
-            buttonRollDice.setVisibility(View.INVISIBLE);
-            buttonPause.setVisibility(View.VISIBLE);
-            buttonPause.setEnabled(true);
             button2.setTextColor(Color.parseColor("#ffffff"));
             button2.setBackgroundColor(Color.parseColor("#6d00c1"));
             button1.setTextColor(Color.parseColor("#000000"));
@@ -612,15 +608,12 @@ public class MainActivity extends AppCompatActivity {
             buttonPassTurnP1.setTextColor(Color.parseColor("#000000"));
             buttonPassTurnP1.setBackgroundColor(Color.parseColor("#D3D3D3"));
         }
-        if (phaseTracker2 >= 5){
-            phaseTracker2 = 7.5;
-            proceedPhase2();
+        else {
+            phaseTracker = 7.5;
+            proceedPhase();
             turn = 1;
             button2.setEnabled(false);
             button1.setEnabled(true);
-            buttonRollDice.setVisibility(View.INVISIBLE);
-            buttonPause.setEnabled(true);
-            buttonPause.setVisibility(View.VISIBLE);
             button1.setTextColor(Color.parseColor("#ffffff"));
             button1.setBackgroundColor(Color.parseColor("#6d00c1"));
             button2.setTextColor(Color.parseColor("#000000"));
@@ -630,30 +623,30 @@ public class MainActivity extends AppCompatActivity {
             buttonPassTurnP2.setBackgroundColor(Color.parseColor("#D3D3D3"));
         }
     }
-
-    public void proceedPhase2(){
+    //turn 0, 1 and 2 in seperate if
+    public void proceedPhase(){
 
         //player 2 starts timer for player 1 and proceeds to upkeep player 1
-        if (turn == 0 && phaseTracker2 == 1){
+        if (turn == 0 && phaseTracker == 1){
             upkeepP1.setAlpha(1f);
         }
         //proceed to main phase player 1
-        if (turn == 2 && phaseTracker2 == 2){
+        if (turn == 2 && phaseTracker == 2){
             upkeepP1.setAlpha(0.3f);
             mainPhaseP1.setAlpha(1f);
         }
         //proceed to combat phase player 1
-        if (turn == 2 && phaseTracker2 == 3){
+        if (turn == 2 && phaseTracker == 3){
             mainPhaseP1.setAlpha(0.3f);
             combatPhaseP1.setAlpha(1f);
         }
         //proceed to post combat main phase player 1
-        if (turn == 2 && phaseTracker2 == 4){
+        if (turn == 2 && phaseTracker == 4){
             combatPhaseP1.setAlpha(0.3f);
             pcMainPhaseP1.setAlpha(1f);
         }
         //proceed to end step player 1
-        if (turn == 1 && phaseTracker2 == 4.5){
+        if (turn == 1 && phaseTracker == 4.5){
             upkeepP1.setAlpha(0.3f);
             mainPhaseP1.setAlpha(0.3f);
             combatPhaseP1.setAlpha(0.3f);
@@ -661,33 +654,33 @@ public class MainActivity extends AppCompatActivity {
             endStepP1.setAlpha(1f);
         }
         //proceed to upkeep player 2
-        if (turn == 2 && phaseTracker2 == 5){
+        if (turn == 2 && phaseTracker == 5){
             pcMainPhaseP1.setAlpha(0.3f);
             endStepP1.setAlpha(0.3f);
             upkeepP2.setAlpha(1f);
         }
         //player 1 starts timer and proceeds to upkeep player 2
-        if (turn == 0 && phaseTracker2 == 4.5){
+        if (turn == 0 && phaseTracker == 4.5){
             upkeepP2.setAlpha(1f);
         }
         //proceed to mainPhaseP2
-        if (turn == 1 && phaseTracker2 == 5.5){
+        if (turn == 1 && phaseTracker == 5.5){
             mainPhaseP2.setAlpha(1f);
             upkeepP2.setAlpha(0.3f);
-            phaseTracker2 = phaseTracker2 - 0.5;
+            phaseTracker = phaseTracker - 0.5;
         }
         //proceed to combat phase player 2
-        if (turn == 1 && phaseTracker2 == 6){
+        if (turn == 1 && phaseTracker == 6){
             mainPhaseP2.setAlpha(0.3f);
             combatPhaseP2.setAlpha(1f);
         }
         //proceed to post combat main phase player 2
-        if (turn == 1 && phaseTracker2 == 7){
+        if (turn == 1 && phaseTracker == 7){
             combatPhaseP2.setAlpha(0.3f);
             pcMainPhaseP2.setAlpha(1f);
         }
         //proceed to end step player 2
-        if (turn == 2 && phaseTracker2 == 7.5){
+        if (turn == 2 && phaseTracker == 7.5){
             upkeepP2.setAlpha(0.3f);
             mainPhaseP2.setAlpha(0.3f);
             combatPhaseP2.setAlpha(0.3f);
@@ -695,11 +688,11 @@ public class MainActivity extends AppCompatActivity {
             endStepP2.setAlpha(1f);
         }
         //proceed to upkeep player 1
-        if (turn == 1 && phaseTracker2 == 8){
+        if (turn == 1 && phaseTracker == 8){
             pcMainPhaseP2.setAlpha(0.3f);
             endStepP2.setAlpha(0.3f);
             upkeepP1.setAlpha(1f);
-            phaseTracker2 = 1.5;
+            phaseTracker = 1.5;
         }
 
     }
@@ -767,19 +760,17 @@ public class MainActivity extends AppCompatActivity {
         buttonTimerUp.setVisibility(View.VISIBLE);
     }
     //up and down by 1 minute for both players
-    public void player1TimeUp(View view){
-        p1Time = p1Time + 60000;
-        p2Time = p2Time + 60000;
-        countDownP1Text.setText(updateText(p1Time));
-        countDownP2Text.setText(updateText(p2Time));
-        progressBarP1.setMax((int) p1Time);
-        progressBarP2.setMax((int) p2Time);
-        progressBarP1.setProgress((int) p1Time);
-        progressBarP2.setProgress((int) p2Time);
+    public void playersTimeUp(View view){
+        timerHandling(true);
     }
-    public void player1TimeDown(View view){
-        p1Time = p1Time - 60000;
-        p2Time = p2Time - 60000;
+
+    public void playersTimeDown(View view){
+        timerHandling(false);
+    }
+
+    public void timerHandling(boolean isUp){
+        p1Time = isUp? p1Time + 60000: p1Time - 60000;
+        p2Time = isUp? p2Time + 60000: p2Time - 60000;
         countDownP1Text.setText(updateText(p1Time));
         countDownP2Text.setText(updateText(p2Time));
         progressBarP1.setMax((int) p1Time);
@@ -806,7 +797,7 @@ public class MainActivity extends AppCompatActivity {
 
         Integer player1Life = Integer.parseInt(player1LifeTextView.getText().toString());
 
-        player1Life = player1Life-1;
+        player1Life--;
 
         player1LifeTextView.setText(player1Life.toString());
 
@@ -830,7 +821,7 @@ public class MainActivity extends AppCompatActivity {
 
         Integer player2Life = Integer.parseInt(player2LifeTextView.getText().toString());
 
-        player2Life = player2Life-1;
+        player2Life--;
 
         player2LifeTextView.setText(player2Life.toString());
 
