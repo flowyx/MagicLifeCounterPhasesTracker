@@ -154,7 +154,13 @@ public class MainActivity extends AppCompatActivity {
         buttonResume = findViewById(R.id.button_Resume);
         buttonResume.setVisibility(View.INVISIBLE);
         buttonPassTurnP1 = findViewById(R.id.pass_turn_p1);
+        buttonPassTurnP1.setEnabled(false);
         buttonPassTurnP2 = findViewById(R.id.pass_turn_p2);
+        buttonPassTurnP2.setEnabled(false);
+        buttonPassTurnP1.setBackgroundColor(Color.parseColor("#D3D3D3"));
+        buttonPassTurnP1.setTextColor(Color.parseColor("#000000"));
+        buttonPassTurnP2.setBackgroundColor(Color.parseColor("#D3D3D3"));
+        buttonPassTurnP2.setTextColor(Color.parseColor("#000000"));
 
         //life set up
         lifePlayer1 = (TextView) findViewById(R.id.lifePlayer1);
@@ -168,6 +174,8 @@ public class MainActivity extends AppCompatActivity {
                 buttonReset.setVisibility(View.VISIBLE);
                 buttonReset.setEnabled(true);
                 if (turn == 0){
+                    button2.setText("END PHASE");
+                    button1.setText("END PHASE");
                     phaseTracker2 = 1;
                     proceedPhase2();
                     buttonPassTurnP2.setEnabled(false);
@@ -256,6 +264,8 @@ public class MainActivity extends AppCompatActivity {
                 buttonReset.setVisibility(View.VISIBLE);
                 buttonReset.setEnabled(true);
                 if (turn == 0){
+                    button2.setText("END PHASE");
+                    button1.setText("END PHASE");
                     phaseTracker2 = 4.5;
                     proceedPhase2();
                     buttonPassTurnP1.setEnabled(false);
@@ -731,10 +741,10 @@ public class MainActivity extends AppCompatActivity {
         button2.setTextColor(Color.parseColor("#ffffff"));
         buttonPassTurnP1.setEnabled(false);
         buttonPassTurnP2.setEnabled(false);
-        buttonPassTurnP1.setBackgroundColor(Color.parseColor("#0067b3"));
-        buttonPassTurnP1.setTextColor(Color.parseColor("#ffffff"));
-        buttonPassTurnP2.setBackgroundColor(Color.parseColor("#0067b3"));
-        buttonPassTurnP2.setTextColor(Color.parseColor("#ffffff"));
+        buttonPassTurnP1.setBackgroundColor(Color.parseColor("#D3D3D3"));
+        buttonPassTurnP1.setTextColor(Color.parseColor("#000000"));
+        buttonPassTurnP2.setBackgroundColor(Color.parseColor("#D3D3D3"));
+        buttonPassTurnP2.setTextColor(Color.parseColor("#000000"));
 
         buttonPause.setVisibility(View.INVISIBLE);
         buttonRollDice.setVisibility(View.VISIBLE);
