@@ -69,9 +69,9 @@ public class MainActivity extends AppCompatActivity {
     ImageButton buttonTimerDown;
     private int turn = 0;
 
+    private long p1Time;
     public int p1Minutes;
     public int p1Seconds;
-    private long p1Time;
 
     private long p2Time;
     public int p2Seconds;
@@ -760,6 +760,8 @@ public class MainActivity extends AppCompatActivity {
         countDownP2Text.setText(updateText(p2Time));
         progressBarP1.setMax((int) p1Time);
         progressBarP2.setMax((int) p2Time);
+        progressBarP1.setProgress((int) p1Time);
+        progressBarP2.setProgress((int) p2Time);
     }
     public void player1TimeDown(View view){
         p1Time = p1Time - 60000;
@@ -768,6 +770,8 @@ public class MainActivity extends AppCompatActivity {
         countDownP2Text.setText(updateText(p2Time));
         progressBarP1.setMax((int) p1Time);
         progressBarP2.setMax((int) p2Time);
+        progressBarP1.setProgress((int) p1Time);
+        progressBarP2.setProgress((int) p2Time);
     }
 
     public void player1LifeUp(View view){
