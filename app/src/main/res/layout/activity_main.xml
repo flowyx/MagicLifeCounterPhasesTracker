@@ -1,0 +1,353 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".MainActivity">
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/player2LifeUp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:clickable="true"
+        android:onClick="player2LifeUp"
+        android:src="@android:drawable/arrow_down_float"
+        app:backgroundTint="#95d0ff"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/lifePlayer2"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.3" />
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/player2LifeDown"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:clickable="true"
+        android:onClick="player2LifeDown"
+        android:src="@android:drawable/arrow_up_float"
+        app:backgroundTint="#95d0ff"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/lifePlayer2"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.3" />
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/player1LifeDown"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:clickable="true"
+        android:onClick="player1LifeDown"
+        android:src="@android:drawable/arrow_down_float"
+        app:backgroundTint="#95d0ff"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/lifePlayer1"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.7" />
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/player1LifeUp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:clickable="true"
+        android:onClick="player1LifeUp"
+        android:src="@android:drawable/arrow_up_float"
+        app:backgroundTint="#95d0ff"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.504"
+        app:layout_constraintStart_toEndOf="@+id/lifePlayer1"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.7" />
+
+    <TextView
+        android:id="@+id/lifePlayer1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="20"
+        android:textSize="48sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.7" />
+
+    <TextView
+        android:id="@+id/lifePlayer2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:rotation="180"
+        android:text="20"
+        android:textSize="48sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.3" />
+
+    <ImageView
+        android:id="@+id/image_view_dice_player1"
+        android:layout_width="70dp"
+        android:layout_height="74dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/lifePlayer1"
+        app:srcCompat="@drawable/dice1" />
+
+    <ImageView
+        android:id="@+id/image_view_dice_player2"
+        android:layout_width="70dp"
+        android:layout_height="74dp"
+        app:layout_constraintBottom_toTopOf="@+id/lifePlayer2"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/dice1" />
+
+    <Button
+        android:id="@+id/button_roll_dice"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:onClick="rollDice"
+        android:text="Roll Dice"
+        app:backgroundTint="#001a4b"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <ProgressBar
+        android:id="@+id/progressBar_Player1"
+        style="?android:attr/progressBarStyleHorizontal"
+        android:layout_width="287dp"
+        android:layout_height="19dp"
+        app:layout_constraintBottom_toTopOf="@+id/lifePlayer1"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/button_roll_dice" />
+
+    <ProgressBar
+        android:id="@+id/progressBar_Player2"
+        style="?android:attr/progressBarStyleHorizontal"
+        android:layout_width="287dp"
+        android:layout_height="19dp"
+        android:rotation="180"
+        app:layout_constraintBottom_toTopOf="@+id/button_roll_dice"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/lifePlayer2" />
+
+    <TextView
+        android:id="@+id/count_down_p1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="30:00"
+        app:layout_constraintBottom_toTopOf="@+id/progressBar_Player1"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <TextView
+        android:id="@+id/count_down_p2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:rotation="180"
+        android:text="30:00"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/progressBar_Player2" />
+
+    <Button
+        android:id="@+id/button2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:rotation="180"
+        android:text="End Phase"
+        app:backgroundTint="#0067b3"
+        app:layout_constraintBottom_toTopOf="@+id/image_view_dice_player2"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <Button
+        android:id="@+id/pass_turn_p2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:onClick="passTurn"
+        android:rotation="180"
+        android:text="Pass Turn"
+        app:backgroundTint="#0067b3"
+        app:layout_constraintBottom_toTopOf="@+id/image_view_dice_player2"
+        app:layout_constraintEnd_toStartOf="@+id/button2"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <Button
+        android:id="@+id/button1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="End Phase"
+        app:backgroundTint="#0067b3"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/image_view_dice_player1" />
+
+    <Button
+        android:id="@+id/pass_turn_p1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:onClick="passTurn"
+        android:text="Pass Turn"
+        app:backgroundTint="#0067b3"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/button1"
+        app:layout_constraintTop_toBottomOf="@+id/image_view_dice_player1" />
+
+    <Button
+        android:id="@+id/button_Pause"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Pause"
+        app:backgroundTint="#001a4b"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <Button
+        android:id="@+id/button_Resume"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Resume"
+        app:backgroundTint="#001a4b"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/button_roll_dice"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.499" />
+
+    <ImageView
+        android:id="@+id/combat_phase_p1"
+        android:layout_width="49dp"
+        android:layout_height="55dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/lifePlayer1"
+        app:srcCompat="@drawable/combatphase" />
+
+    <ImageView
+        android:id="@+id/combat_phase_p2"
+        android:layout_width="49dp"
+        android:layout_height="55dp"
+        android:rotation="180"
+        app:layout_constraintBottom_toTopOf="@+id/lifePlayer2"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/combatphase" />
+
+    <ImageView
+        android:id="@+id/upkeep_p1"
+        android:layout_width="32dp"
+        android:layout_height="35dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/main_phase_p1"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/lifePlayer1"
+        app:srcCompat="@drawable/upkeep" />
+
+    <ImageView
+        android:id="@+id/upkeep_p2"
+        android:layout_width="32dp"
+        android:layout_height="35dp"
+        android:rotation="180"
+        app:layout_constraintBottom_toTopOf="@+id/lifePlayer2"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/main_phase_p2"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/upkeep" />
+
+    <ImageView
+        android:id="@+id/main_phase_p1"
+        android:layout_width="40dp"
+        android:layout_height="39dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/combat_phase_p1"
+        app:layout_constraintStart_toStartOf="@+id/player1LifeDown"
+        app:layout_constraintTop_toBottomOf="@+id/lifePlayer1"
+        app:srcCompat="@drawable/mainphase" />
+
+    <ImageView
+        android:id="@+id/main_phase_p2"
+        android:layout_width="40dp"
+        android:layout_height="39dp"
+        android:rotation="180"
+        app:layout_constraintBottom_toTopOf="@+id/lifePlayer2"
+        app:layout_constraintEnd_toEndOf="@+id/player2LifeDown"
+        app:layout_constraintStart_toEndOf="@+id/image_view_dice_player2"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/mainphase" />
+
+    <ImageView
+        android:id="@+id/pc_main_phase_p2"
+        android:layout_width="40dp"
+        android:layout_height="39dp"
+        android:rotation="180"
+        app:layout_constraintBottom_toTopOf="@+id/lifePlayer2"
+        app:layout_constraintEnd_toStartOf="@+id/image_view_dice_player2"
+        app:layout_constraintStart_toStartOf="@+id/player2LifeUp"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/mainphase" />
+
+    <ImageView
+        android:id="@+id/pc_main_phase_p1"
+        android:layout_width="40dp"
+        android:layout_height="39dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="@+id/player1LifeUp"
+        app:layout_constraintStart_toEndOf="@+id/combat_phase_p1"
+        app:layout_constraintTop_toBottomOf="@+id/lifePlayer1"
+        app:srcCompat="@drawable/mainphase" />
+
+    <ImageView
+        android:id="@+id/end_step_p1"
+        android:layout_width="32dp"
+        android:layout_height="32dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/pc_main_phase_p1"
+        app:layout_constraintTop_toBottomOf="@+id/lifePlayer1"
+        app:srcCompat="@drawable/endstep" />
+
+    <ImageView
+        android:id="@+id/end_step_p2"
+        android:layout_width="32dp"
+        android:layout_height="32dp"
+        android:rotation="180"
+        app:layout_constraintBottom_toTopOf="@+id/lifePlayer2"
+        app:layout_constraintEnd_toStartOf="@+id/pc_main_phase_p2"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/endstep" />
+
+    <Button
+        android:id="@+id/reset_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:onClick="reset"
+        android:text="Reset"
+        app:backgroundTint="#001a4b"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/button_roll_dice"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
