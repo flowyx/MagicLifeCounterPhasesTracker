@@ -191,9 +191,9 @@ public class MainActivity extends AppCompatActivity {
                     phaseTracker2 = 1;
                     proceedPhase2();
                     buttonPassTurnP2.setEnabled(false);
-                    buttonPassTurnP1.setEnabled(true);
-                    buttonPassTurnP1.setTextColor(Color.parseColor("#ffffff"));
-                    buttonPassTurnP1.setBackgroundColor(Color.parseColor("#6d00c1"));
+                    buttonPassTurnP1.setEnabled(false);
+                    buttonPassTurnP1.setTextColor(Color.parseColor("#000000"));
+                    buttonPassTurnP1.setBackgroundColor(Color.parseColor("#D3D3D3"));
                     buttonPassTurnP2.setTextColor(Color.parseColor("#000000"));
                     buttonPassTurnP2.setBackgroundColor(Color.parseColor("#D3D3D3"));
 
@@ -285,9 +285,9 @@ public class MainActivity extends AppCompatActivity {
                     phaseTracker2 = 4.5;
                     proceedPhase2();
                     buttonPassTurnP1.setEnabled(false);
-                    buttonPassTurnP2.setEnabled(true);
-                    buttonPassTurnP2.setTextColor(Color.parseColor("#ffffff"));
-                    buttonPassTurnP2.setBackgroundColor(Color.parseColor("#6d00c1"));
+                    buttonPassTurnP2.setEnabled(false);
+                    buttonPassTurnP2.setTextColor(Color.parseColor("#000000"));
+                    buttonPassTurnP2.setBackgroundColor(Color.parseColor("#D3D3D3"));
                     buttonPassTurnP1.setTextColor(Color.parseColor("#000000"));
                     buttonPassTurnP1.setBackgroundColor(Color.parseColor("#D3D3D3"));
                 }
@@ -608,7 +608,7 @@ public class MainActivity extends AppCompatActivity {
             buttonPassTurnP1.setTextColor(Color.parseColor("#000000"));
             buttonPassTurnP1.setBackgroundColor(Color.parseColor("#D3D3D3"));
         }
-        if (phaseTracker2 >=5){
+        if (phaseTracker2 >= 5){
             phaseTracker2 = 7.5;
             proceedPhase2();
             turn = 1;
@@ -702,9 +702,17 @@ public class MainActivity extends AppCompatActivity {
 
     public void reset(View view){
 
-        p1Timer.cancel();
-        p2Timer.cancel();
+        //if no timer object exists do nothing
+        try {
+            p1Timer.cancel();
+            p2Timer.cancel();
+        }
+        catch(Exception e){
 
+        }
+
+        progressBarP1.setMax((int) original);
+        progressBarP2.setMax((int) original);
         progressBarP1.setProgress((int) original);
         progressBarP2.setProgress((int) original);
         p1Time = original;
@@ -734,6 +742,8 @@ public class MainActivity extends AppCompatActivity {
         button1.setTextColor(Color.parseColor("#ffffff"));
         button2.setBackgroundColor(Color.parseColor("#0067b3"));
         button2.setTextColor(Color.parseColor("#ffffff"));
+        button1.setText("START P2");
+        button2.setText("START P1");
         buttonPassTurnP1.setEnabled(false);
         buttonPassTurnP2.setEnabled(false);
         buttonPassTurnP1.setBackgroundColor(Color.parseColor("#D3D3D3"));
