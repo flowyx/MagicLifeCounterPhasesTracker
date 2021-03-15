@@ -758,13 +758,16 @@ public class MainActivity extends AppCompatActivity {
         p2Time = p2Time + 60000;
         countDownP1Text.setText(updateText(p1Time));
         countDownP2Text.setText(updateText(p2Time));
+        progressBarP1.setMax((int) p1Time);
+        progressBarP2.setMax((int) p2Time);
     }
     public void player1TimeDown(View view){
         p1Time = p1Time - 60000;
         p2Time = p2Time - 60000;
         countDownP1Text.setText(updateText(p1Time));
         countDownP2Text.setText(updateText(p2Time));
-
+        progressBarP1.setMax((int) p1Time);
+        progressBarP2.setMax((int) p2Time);
     }
 
     public void player1LifeUp(View view){
