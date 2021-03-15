@@ -100,6 +100,7 @@ public class MainActivity extends AppCompatActivity {
         pcMainPhaseP2 = findViewById(R.id.pc_main_phase_p2);
         endStepP2 = findViewById(R.id.end_step_p2);
 
+        //--> set initial image state alphas
         upkeepP1.setAlpha(0.3f);
         mainPhaseP1.setAlpha(0.3f);
         combatPhaseP1.setAlpha(0.3f);
@@ -111,31 +112,34 @@ public class MainActivity extends AppCompatActivity {
         pcMainPhaseP2.setAlpha(0.3f);
         endStepP2.setAlpha(0.3f);
 
-
         //don't fall asleep
         getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
 
         //set up dice
         imageViewDicePlayer1 = findViewById(R.id.image_view_dice_player1);
         imageViewDicePlayer2 = findViewById(R.id.image_view_dice_player2);
-        imageViewDicePlayer1.animate().alpha(0f);
-        imageViewDicePlayer2.animate().alpha(0f);
+        imageViewDicePlayer1.setAlpha(0f);
+        imageViewDicePlayer2.setAlpha(0f);
         buttonRollDice = findViewById(R.id.button_roll_dice);
 
         //count down set up
         countDownP1Text = findViewById(R.id.count_down_p1);
         countDownP2Text = findViewById(R.id.count_down_p2);
+        /*
         String s1 = countDownP1Text.getText().toString();
         String[] countDownP1Array = s1.split( ":");
         p1Minutes = Integer.parseInt(countDownP1Array[0]);
         p1Seconds = Integer.parseInt(countDownP1Array[1]);
-        p1Time = p1Minutes * 60000;
+        */
+        p1Time = original;
 
+        /*
         String s2 = countDownP2Text.getText().toString();
         String[] countDownP2Array = s2.split( ":");
-        p2Minutes = Integer.parseInt(countDownP1Array[0]);
-        p2Seconds = Integer.parseInt(countDownP1Array[1]);
-        p2Time = p2Minutes * 60000;
+        p2Minutes = Integer.parseInt(countDownP2Array[0]);
+        p2Seconds = Integer.parseInt(countDownP2Array[1]);
+         */
+        p2Time = original;
 
         buttonTimerUp = findViewById(R.id.timerUp);
         buttonTimerDown = findViewById(R.id.timerDown);
