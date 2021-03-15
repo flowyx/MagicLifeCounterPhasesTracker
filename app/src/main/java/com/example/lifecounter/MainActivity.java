@@ -115,6 +115,7 @@ public class MainActivity extends AppCompatActivity {
         //don't fall asleep
         getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
 
+        //set up dice
         imageViewDicePlayer1 = findViewById(R.id.image_view_dice_player1);
         imageViewDicePlayer2 = findViewById(R.id.image_view_dice_player2);
         imageViewDicePlayer1.animate().alpha(0f);
@@ -148,6 +149,7 @@ public class MainActivity extends AppCompatActivity {
         progressBarP2.setMax((int) p2Time);
         progressBarP2.setProgress((int) p2Time);
 
+        //set up control buttons
         button1 = findViewById(R.id.button1);
         button2 = findViewById(R.id.button2);
         buttonPause = findViewById(R.id.button_Pause);
@@ -182,6 +184,7 @@ public class MainActivity extends AppCompatActivity {
                 buttonReset.setEnabled(true);
                 buttonTimerDown.setVisibility(View.INVISIBLE);
                 buttonTimerUp.setVisibility(View.INVISIBLE);
+                //if player 1 starts do the following
                 if (turn == 0){
                     button2.setText("END PHASE");
                     button1.setText("END PHASE");
@@ -195,10 +198,12 @@ public class MainActivity extends AppCompatActivity {
                     buttonPassTurnP2.setBackgroundColor(Color.parseColor("#D3D3D3"));
 
                 }
+                //if game is going on do the following
                 else {
                     phaseTracker2 = phaseTracker2 + 0.5;
                     proceedPhase2();
                 }
+                //if turn player 2
                 if (turn != 0 && phaseTracker2 >= 5){
                     buttonPassTurnP2.setEnabled(false);
                     //buttonPassTurnP1.setEnabled(true);
@@ -207,27 +212,26 @@ public class MainActivity extends AppCompatActivity {
                     buttonPassTurnP2.setTextColor(Color.parseColor("#000000"));
                     buttonPassTurnP2.setBackgroundColor(Color.parseColor("#D3D3D3"));
                 }
+                //if turn player 1
                 if (turn != 0 && phaseTracker2 < 5){
                     buttonPassTurnP1.setEnabled(true);
                     buttonPassTurnP1.setTextColor(Color.parseColor("#ffffff"));
                     buttonPassTurnP1.setBackgroundColor(Color.parseColor("#6d00c1"));
                 }
 
-
-
+                    //switch button activity
                     button2.setEnabled(false);
                     button1.setEnabled(true);
                     buttonRollDice.setVisibility(View.INVISIBLE);
                     buttonPause.setEnabled(true);
                     buttonPause.setVisibility(View.VISIBLE);
 
-                    //button1.setBackgroundResource(R.drawable.button_ticking);
-                    //button2.setBackgroundResource(R.drawable.button_stopped);
                     button1.setTextColor(Color.parseColor("#ffffff"));
                     button1.setBackgroundColor(Color.parseColor("#6d00c1"));
                     button2.setTextColor(Color.parseColor("#000000"));
                     button2.setBackgroundColor(Color.parseColor("#D3D3D3"));
 
+                    //start timer
                     if (turn == 0 || turn == 2) {
 
                         p1Timer = new CountDownTimer(p1Time, 1) {
@@ -274,6 +278,7 @@ public class MainActivity extends AppCompatActivity {
                 buttonReset.setEnabled(true);
                 buttonTimerDown.setVisibility(View.INVISIBLE);
                 buttonTimerUp.setVisibility(View.INVISIBLE);
+                //if player 2 starts do the following
                 if (turn == 0){
                     button2.setText("END PHASE");
                     button1.setText("END PHASE");
@@ -286,11 +291,12 @@ public class MainActivity extends AppCompatActivity {
                     buttonPassTurnP1.setTextColor(Color.parseColor("#000000"));
                     buttonPassTurnP1.setBackgroundColor(Color.parseColor("#D3D3D3"));
                 }
+                //if game is going on do the following
                 else {
                     phaseTracker2 = phaseTracker2 + 0.5;
                     proceedPhase2();
                 }
-
+                //if turn player 1
                 if (turn != 0 && phaseTracker2 < 5){
                     buttonPassTurnP1.setEnabled(false);
                     //buttonPassTurnP2.setEnabled(true);
@@ -299,6 +305,7 @@ public class MainActivity extends AppCompatActivity {
                     buttonPassTurnP1.setTextColor(Color.parseColor("#000000"));
                     buttonPassTurnP1.setBackgroundColor(Color.parseColor("#D3D3D3"));
                 }
+                //if turn player 2
                 if (turn != 0 && phaseTracker2 >= 5){
                     buttonPassTurnP2.setEnabled(true);
                     buttonPassTurnP2.setTextColor(Color.parseColor("#ffffff"));
@@ -316,15 +323,11 @@ public class MainActivity extends AppCompatActivity {
                     buttonPause.setVisibility(View.VISIBLE);
                     buttonPause.setEnabled(true);
 
-                    //button1.setBackgroundColor(Color.parseColor("#999999"));
-                    //button2.setBackgroundColor(Color.parseColor("#1AC02B"));
-                    //button2.setBackgroundResource(R.drawable.button_ticking);
-                    //button1.setBackgroundResource(R.drawable.button_stopped);
-
                     button2.setTextColor(Color.parseColor("#ffffff"));
                     button2.setBackgroundColor(Color.parseColor("#6d00c1"));
                     button1.setTextColor(Color.parseColor("#000000"));
                     button1.setBackgroundColor(Color.parseColor("#D3D3D3"));
+                    //start timer
                     if (turn == 1 || turn == 0) {
 
                         p2Timer = new CountDownTimer(p2Time, 1) {
@@ -378,13 +381,10 @@ public class MainActivity extends AppCompatActivity {
                 if (turn == 1) {
                     button1.setBackgroundColor(Color.parseColor("#F9AE34"));
                     button1.setTextColor(Color.parseColor("#ffffff"));
-                    //button1.setBackgroundResource(R.drawable.button_paused);
                 } else if (turn == 2) {
                     button2.setBackgroundColor(Color.parseColor("#F9AE34"));
                     button2.setTextColor(Color.parseColor("#ffffff"));
-                    //button2.setBackgroundResource(R.drawable.button_paused);
                 }
-                //turn = 0;
                 buttonPause.setVisibility(View.INVISIBLE);
                 buttonResume.setVisibility(View.VISIBLE);
             }
@@ -446,15 +446,11 @@ public class MainActivity extends AppCompatActivity {
                             //timeGone();
                         }
                     }.start();
-}
+                }
                 buttonPause.setVisibility(View.VISIBLE);
                 buttonResume.setVisibility(View.INVISIBLE);
-
             }
         });
-
-
-
     }
 
     public String updateText(long milliseconds) {
@@ -494,17 +490,15 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-
-
     public void rollDice(View view){
-
+        //hides phases and shows dice
         hidePhases(view);
         imageViewDicePlayer1.animate().alpha(1f).setDuration(1000);
         imageViewDicePlayer2.animate().alpha(1f).setDuration(1000);
 
         int dicePlayer1 = 0;
         int dicePlayer2 = 0;
-
+        //randomized until dice show different values
         while(dicePlayer1 == dicePlayer2){
             dicePlayer1 = rng.nextInt(6) + 1;
             dicePlayer2 = rng.nextInt(6) + 1;
@@ -551,15 +545,7 @@ public class MainActivity extends AppCompatActivity {
                 imageViewDicePlayer2.setImageResource(R.drawable.dice6);
                 break;
         }
-
-        /*
-        Animation fadeOut = new AlphaAnimation(1, 0);
-        fadeOut.setInterpolator(new AccelerateInterpolator());
-        fadeOut.setStartOffset(10000);
-        fadeOut.setDuration(2000);
-        AnimationSet animation = new AnimationSet(false);
-        animation.addAnimation(fadeOut);
-        */
+        //animation to switch between dice and phases
         new CountDownTimer(3000, 1000){
             @Override
             public void onTick(long millisUntilFinished) {
@@ -603,7 +589,7 @@ public class MainActivity extends AppCompatActivity {
         pcMainPhaseP2.animate().alpha(0.3f).setDuration(2500);
         endStepP2.animate().alpha(0.3f).setDuration(2500);
     }
-
+    //is only available while one player is on turn and during phase
     public void passTurn(View view){
         if (phaseTracker2 < 5){
             phaseTracker2 = 4.5;
@@ -639,8 +625,6 @@ public class MainActivity extends AppCompatActivity {
             buttonPassTurnP2.setTextColor(Color.parseColor("#000000"));
             buttonPassTurnP2.setBackgroundColor(Color.parseColor("#D3D3D3"));
         }
-
-
     }
 
     public void proceedPhase2(){
@@ -768,7 +752,7 @@ public class MainActivity extends AppCompatActivity {
         buttonTimerDown.setVisibility(View.VISIBLE);
         buttonTimerUp.setVisibility(View.VISIBLE);
     }
-
+    //up and down by 1 minute for both players
     public void player1TimeUp(View view){
         p1Time = p1Time + 60000;
         p2Time = p2Time + 60000;
