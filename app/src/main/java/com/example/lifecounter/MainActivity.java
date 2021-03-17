@@ -188,29 +188,7 @@ public class MainActivity extends AppCompatActivity {
 
                     //start timer
                     if (turn % 2 == 0) {
-
-                        p1Timer = new CountDownTimer(p1Time, 1) {
-                            @Override
-                            public void onTick(long millisUntilFinished) {
-                                if (turn != 1) {    //No longer player 1's turn, stop timer
-                                    cancel();
-                                } else {    //Otherwise, deduct time
-
-                                    p1Time = (millisUntilFinished - 1);
-                                    countDownP1Text.setText(updateText(p1Time));
-                                    progressBarP1.setProgress((int) p1Time);
-                                    //button1.setText(updateText(p1Time));
-                                }
-                            }
-
-                            @Override
-                            public void onFinish() {
-                                button1.setBackgroundColor(Color.parseColor("#C0392B"));
-                                button1.setTextColor(Color.parseColor("#ffffff"));
-                                //button1.setBackgroundResource(R.drawable.button_timeout);
-                                //timeGone();
-                            }
-                        }.start();
+                        startTimerP1(v);
                     }
                     if (turn == 2) {
                         p2Timer.cancel();
@@ -249,33 +227,9 @@ public class MainActivity extends AppCompatActivity {
 
                     //start timer
                     if (turn == 1 || turn == 0) {
-
-                        //--> setTimerPlayer2()
-                        //--> create object player1 & 2
-                        p2Timer = new CountDownTimer(p2Time, 1) {
-                            @Override
-                            public void onTick(long millisUntilFinished) {
-
-                                if (turn != 2) {    //No longer player 2's turn, stop timer
-                                    cancel();
-                                } else {    //Otherwise, deduct time
-
-                                    p2Time = (millisUntilFinished - 1);
-                                    countDownP2Text.setText(updateText(p2Time));
-                                    progressBarP2.setProgress((int) p2Time);
-                                    //button2.setText(updateText(p2Time));
-                                }
-                            }
-
-                            @Override
-                            public void onFinish() {
-                                button2.setBackgroundColor(Color.parseColor("#C0392B"));
-                                button2.setTextColor(Color.parseColor("#ffffff"));
-                                //button2.setBackgroundResource(R.drawable.button_timeout);
-                                //timeGone();
-                            }
-                        }.start();
+                        startTimerP2(v);
                     }
+
                     if (turn == 1) {
                         p1Timer.cancel();
                         turn = 2;
@@ -369,9 +323,46 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
-    public void startTimer(View view){
+    public void startTimerP1(View view){
+        p1Timer = new CountDownTimer(p1Time, 1) {
+            @Override
+            public void onTick(long millisUntilFinished) {
+                if (turn != 1) {    //No longer player 1's turn, stop timer
+                    cancel();
+                } else {    //Otherwise, deduct time
 
+                    p1Time = (millisUntilFinished - 1);
+                    countDownP1Text.setText(updateText(p1Time));
+                    progressBarP1.setProgress((int) p1Time);
+                }
+            }
+            @Override
+            public void onFinish() {
+                button1.setBackgroundColor(Color.parseColor("#C0392B"));
+                button1.setTextColor(Color.parseColor("#ffffff"));
+            }
+        }.start();
+    }
 
+    public void startTimerP2(View view){
+        p2Timer = new CountDownTimer(p2Time, 1) {
+            @Override
+            public void onTick(long millisUntilFinished) {
+                if (turn != 2) {    //No longer player 2's turn, stop timer
+                    cancel();
+                } else {    //Otherwise, deduct time
+
+                    p2Time = (millisUntilFinished - 1);
+                    countDownP2Text.setText(updateText(p2Time));
+                    progressBarP2.setProgress((int) p2Time);
+                }
+            }
+            @Override
+            public void onFinish() {
+                button2.setBackgroundColor(Color.parseColor("#C0392B"));
+                button2.setTextColor(Color.parseColor("#ffffff"));
+            }
+        }.start();
     }
 
     public void disableButtonsP1(View view){
@@ -545,6 +536,7 @@ public class MainActivity extends AppCompatActivity {
         pcMainPhaseP2.animate().alpha(0.3f).setDuration(2500);
         endStepP2.animate().alpha(0.3f).setDuration(2500);
     }
+
     //is only available while one player is on turn and during phase
     public void passTurn(View view){
 
@@ -557,6 +549,7 @@ public class MainActivity extends AppCompatActivity {
             turn = 2;
             disableButtonsP1(view);
             enableButtonsP2(view);
+            startTimerP2(view);
         }
         else {
             phaseTracker = 7.5;
@@ -564,6 +557,7 @@ public class MainActivity extends AppCompatActivity {
             turn = 1;
             enableButtonsP1(view);
             disableButtonsP2(view);
+            startTimerP1(view);
         }
     }
     //turn 0, 1 and 2 in separate if
@@ -664,7 +658,6 @@ public class MainActivity extends AppCompatActivity {
         p2Time = original;
         countDownP1Text.setText(updateText(p1Time));
         countDownP2Text.setText(updateText(p2Time));
-
 
         lifePlayer1.setText("20");
         lifePlayer2.setText("20");
