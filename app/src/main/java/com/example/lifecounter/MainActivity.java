@@ -117,20 +117,7 @@ public class MainActivity extends AppCompatActivity {
         //count down set up
         countDownP1Text = findViewById(R.id.count_down_p1);
         countDownP2Text = findViewById(R.id.count_down_p2);
-        /*
-        String s1 = countDownP1Text.getText().toString();
-        String[] countDownP1Array = s1.split( ":");
-        p1Minutes = Integer.parseInt(countDownP1Array[0]);
-        p1Seconds = Integer.parseInt(countDownP1Array[1]);
-        */
         p1Time = original;
-
-        /*
-        String s2 = countDownP2Text.getText().toString();
-        String[] countDownP2Array = s2.split( ":");
-        p2Minutes = Integer.parseInt(countDownP2Array[0]);
-        p2Seconds = Integer.parseInt(countDownP2Array[1]);
-         */
         p2Time = original;
 
         //--> findViewElementsById()
@@ -186,47 +173,18 @@ public class MainActivity extends AppCompatActivity {
                     button2.setText("END PHASE");
                     button1.setText("END PHASE");
                     phaseTracker = 1;
-                    proceedPhase();
-                    buttonPassTurnP2.setEnabled(false);
-                    buttonPassTurnP1.setEnabled(false);
-                    buttonPassTurnP1.setTextColor(Color.parseColor("#000000"));
-                    buttonPassTurnP1.setBackgroundColor(Color.parseColor("#D3D3D3"));
-                    buttonPassTurnP2.setTextColor(Color.parseColor("#000000"));
-                    buttonPassTurnP2.setBackgroundColor(Color.parseColor("#D3D3D3"));
-
                 }
+
                 //if game is going on do the following
                 else {
                     phaseTracker = phaseTracker + 0.5;
-                    proceedPhase();
                 }
-                //if turn player 2
-                if (turn != 0 && phaseTracker >= 5){
-                    buttonPassTurnP2.setEnabled(false);
-                    //buttonPassTurnP1.setEnabled(true);
-                    //buttonPassTurnP1.setTextColor(Color.parseColor("#ffffff"));
-                    //buttonPassTurnP1.setBackgroundColor(Color.parseColor("#6d00c1"));
-                    buttonPassTurnP2.setTextColor(Color.parseColor("#000000"));
-                    buttonPassTurnP2.setBackgroundColor(Color.parseColor("#D3D3D3"));
-                }
-                //if turn player 1
-                if (turn != 0 && phaseTracker < 5){
-                    buttonPassTurnP1.setEnabled(true);
-                    buttonPassTurnP1.setTextColor(Color.parseColor("#ffffff"));
-                    buttonPassTurnP1.setBackgroundColor(Color.parseColor("#6d00c1"));
-                }
-
-                    //switch button activity
-                    button2.setEnabled(false);
-                    button1.setEnabled(true);
-                    buttonRollDice.setVisibility(View.INVISIBLE);
-                    buttonPause.setEnabled(true);
-                    buttonPause.setVisibility(View.VISIBLE);
-
-                    button1.setTextColor(Color.parseColor("#ffffff"));
-                    button1.setBackgroundColor(Color.parseColor("#6d00c1"));
-                    button2.setTextColor(Color.parseColor("#000000"));
-                    button2.setBackgroundColor(Color.parseColor("#D3D3D3"));
+                proceedPhase();
+                disableButtonsP2(v);
+                enableButtonsP1(v);
+                buttonRollDice.setVisibility(View.INVISIBLE);
+                buttonPause.setEnabled(true);
+                buttonPause.setVisibility(View.VISIBLE);
 
                     //start timer
                     if (turn % 2 == 0) {
@@ -254,16 +212,13 @@ public class MainActivity extends AppCompatActivity {
                             }
                         }.start();
                     }
-
                     if (turn == 2) {
                         p2Timer.cancel();
                         countDownP2Text.setText(updateText(p2Time));
                         progressBarP2.setProgress((int) p2Time);
                         //button2.setText(updateText(p2Time));
                     }
-
                     turn = 1;
-
             }
         });
 
@@ -280,51 +235,18 @@ public class MainActivity extends AppCompatActivity {
                     button2.setText("END PHASE");
                     button1.setText("END PHASE");
                     phaseTracker = 4.5;
-                    proceedPhase();
-                    //--> disable buttons player 1 / 2
-                    buttonPassTurnP1.setEnabled(false);
-                    buttonPassTurnP2.setEnabled(false);
-                    buttonPassTurnP2.setTextColor(Color.parseColor("#000000"));
-                    buttonPassTurnP2.setBackgroundColor(Color.parseColor("#D3D3D3"));
-                    buttonPassTurnP1.setTextColor(Color.parseColor("#000000"));
-                    buttonPassTurnP1.setBackgroundColor(Color.parseColor("#D3D3D3"));
                 }
                 //if game is going on do the following
                 else {
                     phaseTracker = phaseTracker + 0.5;
-                    proceedPhase();
                 }
-                //if turn player 1
-                if (turn != 0 && phaseTracker < 5){
-                    buttonPassTurnP1.setEnabled(false);
-                    //buttonPassTurnP2.setEnabled(true);
-                    //buttonPassTurnP2.setTextColor(Color.parseColor("#ffffff"));
-                    //buttonPassTurnP2.setBackgroundColor(Color.parseColor("#6d00c1"));
-                    buttonPassTurnP1.setTextColor(Color.parseColor("#000000"));
-                    buttonPassTurnP1.setBackgroundColor(Color.parseColor("#D3D3D3"));
-                }
-                //if turn player 2
-                if (turn != 0 && phaseTracker >= 5){
-                    buttonPassTurnP2.setEnabled(true);
-                    buttonPassTurnP2.setTextColor(Color.parseColor("#ffffff"));
-                    buttonPassTurnP2.setBackgroundColor(Color.parseColor("#6d00c1"));
-                }
+                proceedPhase();
+                disableButtonsP1(v);
+                enableButtonsP2(v);
+                buttonRollDice.setVisibility(View.INVISIBLE);
+                buttonPause.setVisibility(View.VISIBLE);
+                buttonPause.setEnabled(true);
 
-                if (turn != 0 && phaseTracker == 5.5){
-                    buttonPassTurnP1.setEnabled(true);
-                    buttonPassTurnP1.setTextColor(Color.parseColor("#ffffff"));
-                    buttonPassTurnP1.setBackgroundColor(Color.parseColor("#6d00c1"));
-                }
-                    button1.setEnabled(false);
-                    button2.setEnabled(true);
-                    buttonRollDice.setVisibility(View.INVISIBLE);
-                    buttonPause.setVisibility(View.VISIBLE);
-                    buttonPause.setEnabled(true);
-
-                    button2.setTextColor(Color.parseColor("#ffffff"));
-                    button2.setBackgroundColor(Color.parseColor("#6d00c1"));
-                    button1.setTextColor(Color.parseColor("#000000"));
-                    button1.setBackgroundColor(Color.parseColor("#D3D3D3"));
                     //start timer
                     if (turn == 1 || turn == 0) {
 
@@ -354,7 +276,6 @@ public class MainActivity extends AppCompatActivity {
                             }
                         }.start();
                     }
-
                     if (turn == 1) {
                         p1Timer.cancel();
                         turn = 2;
@@ -362,10 +283,7 @@ public class MainActivity extends AppCompatActivity {
                         progressBarP1.setProgress((int) p1Time);
                         //button1.setText(updateText(p1Time));
                     }
-
                     turn = 2;
-
-
             }
         });
 
@@ -451,6 +369,51 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
+    public void startTimer(View view){
+
+
+    }
+
+    public void disableButtonsP1(View view){
+        buttonPassTurnP1.setEnabled(false);
+        buttonPassTurnP1.setTextColor(Color.parseColor("#000000"));
+        buttonPassTurnP1.setBackgroundColor(Color.parseColor("#D3D3D3"));
+        button1.setEnabled(false);
+        button1.setTextColor(Color.parseColor("#000000"));
+        button1.setBackgroundColor(Color.parseColor("#D3D3D3"));
+    }
+
+    public void enableButtonsP1(View view){
+        if (phaseTracker < 5 && phaseTracker > 1) {
+            buttonPassTurnP1.setEnabled(true);
+            buttonPassTurnP1.setTextColor(Color.parseColor("#ffffff"));
+            buttonPassTurnP1.setBackgroundColor(Color.parseColor("#6d00c1"));
+        }
+        button1.setEnabled(true);
+        button1.setTextColor(Color.parseColor("#ffffff"));
+        button1.setBackgroundColor(Color.parseColor("#6d00c1"));
+    }
+
+    public void disableButtonsP2(View view){
+        buttonPassTurnP2.setEnabled(false);
+        buttonPassTurnP2.setTextColor(Color.parseColor("#000000"));
+        buttonPassTurnP2.setBackgroundColor(Color.parseColor("#D3D3D3"));
+        button2.setEnabled(false);
+        button2.setTextColor(Color.parseColor("#000000"));
+        button2.setBackgroundColor(Color.parseColor("#D3D3D3"));
+    }
+
+    public void enableButtonsP2(View view){
+        if (phaseTracker >= 5) {
+            buttonPassTurnP2.setEnabled(true);
+            buttonPassTurnP2.setTextColor(Color.parseColor("#ffffff"));
+            buttonPassTurnP2.setBackgroundColor(Color.parseColor("#6d00c1"));
+        }
+        button2.setEnabled(true);
+        button2.setTextColor(Color.parseColor("#ffffff"));
+        button2.setBackgroundColor(Color.parseColor("#6d00c1"));
+    }
+
     public String updateText(long milliseconds) {
         if (milliseconds >= 3600000) {   //Greater than 1 hour and less than 24
             long hours = milliseconds / 3600000;
@@ -480,12 +443,6 @@ public class MainActivity extends AppCompatActivity {
             long decisecond = (milliseconds / 100) - (seconds * 10);
             return ("" + seconds + "." + decisecond);
         }
-    }
-
-    public MainActivity(){
-
-        timerRuns = false;
-
     }
 
     public void rollDice(View view){
@@ -598,37 +555,29 @@ public class MainActivity extends AppCompatActivity {
             phaseTracker = 4.5;
             proceedPhase();
             turn = 2;
-            button1.setEnabled(false);
-            button2.setEnabled(true);
-            button2.setTextColor(Color.parseColor("#ffffff"));
-            button2.setBackgroundColor(Color.parseColor("#6d00c1"));
-            button1.setTextColor(Color.parseColor("#000000"));
-            button1.setBackgroundColor(Color.parseColor("#D3D3D3"));
-            buttonPassTurnP1.setEnabled(false);
-            buttonPassTurnP1.setTextColor(Color.parseColor("#000000"));
-            buttonPassTurnP1.setBackgroundColor(Color.parseColor("#D3D3D3"));
+            disableButtonsP1(view);
+            enableButtonsP2(view);
         }
         else {
             phaseTracker = 7.5;
             proceedPhase();
             turn = 1;
-            button2.setEnabled(false);
-            button1.setEnabled(true);
-            button1.setTextColor(Color.parseColor("#ffffff"));
-            button1.setBackgroundColor(Color.parseColor("#6d00c1"));
-            button2.setTextColor(Color.parseColor("#000000"));
-            button2.setBackgroundColor(Color.parseColor("#D3D3D3"));
-            buttonPassTurnP2.setEnabled(false);
-            buttonPassTurnP2.setTextColor(Color.parseColor("#000000"));
-            buttonPassTurnP2.setBackgroundColor(Color.parseColor("#D3D3D3"));
+            enableButtonsP1(view);
+            disableButtonsP2(view);
         }
     }
-    //turn 0, 1 and 2 in seperate if
+    //turn 0, 1 and 2 in separate if
     public void proceedPhase(){
-
-        //player 2 starts timer for player 1 and proceeds to upkeep player 1
-        if (turn == 0 && phaseTracker == 1){
-            upkeepP1.setAlpha(1f);
+        //first turn
+        if (turn == 0) {
+            //player 2 starts timer for player 1 and proceeds to upkeep player 1
+            if (phaseTracker == 1) {
+                upkeepP1.setAlpha(1f);
+            }
+            //player 1 starts timer and proceeds to upkeep player 2
+            if (turn == 0 && phaseTracker == 4.5) {
+                upkeepP2.setAlpha(1f);
+            }
         }
         //proceed to main phase player 1
         if (turn == 2 && phaseTracker == 2){
@@ -645,6 +594,20 @@ public class MainActivity extends AppCompatActivity {
             combatPhaseP1.setAlpha(0.3f);
             pcMainPhaseP1.setAlpha(1f);
         }
+        //proceed to upkeep player 2
+        if (turn == 2 && phaseTracker == 5){
+            pcMainPhaseP1.setAlpha(0.3f);
+            endStepP1.setAlpha(0.3f);
+            upkeepP2.setAlpha(1f);
+        }
+        //proceed to end step player 2
+        if (turn == 2 && phaseTracker == 7.5){
+            upkeepP2.setAlpha(0.3f);
+            mainPhaseP2.setAlpha(0.3f);
+            combatPhaseP2.setAlpha(0.3f);
+            pcMainPhaseP2.setAlpha(1f);
+            endStepP2.setAlpha(1f);
+        }
         //proceed to end step player 1
         if (turn == 1 && phaseTracker == 4.5){
             upkeepP1.setAlpha(0.3f);
@@ -653,16 +616,8 @@ public class MainActivity extends AppCompatActivity {
             pcMainPhaseP1.setAlpha(1f);
             endStepP1.setAlpha(1f);
         }
-        //proceed to upkeep player 2
-        if (turn == 2 && phaseTracker == 5){
-            pcMainPhaseP1.setAlpha(0.3f);
-            endStepP1.setAlpha(0.3f);
-            upkeepP2.setAlpha(1f);
-        }
-        //player 1 starts timer and proceeds to upkeep player 2
-        if (turn == 0 && phaseTracker == 4.5){
-            upkeepP2.setAlpha(1f);
-        }
+
+
         //proceed to mainPhaseP2
         if (turn == 1 && phaseTracker == 5.5){
             mainPhaseP2.setAlpha(1f);
@@ -679,14 +634,7 @@ public class MainActivity extends AppCompatActivity {
             combatPhaseP2.setAlpha(0.3f);
             pcMainPhaseP2.setAlpha(1f);
         }
-        //proceed to end step player 2
-        if (turn == 2 && phaseTracker == 7.5){
-            upkeepP2.setAlpha(0.3f);
-            mainPhaseP2.setAlpha(0.3f);
-            combatPhaseP2.setAlpha(0.3f);
-            pcMainPhaseP2.setAlpha(1f);
-            endStepP2.setAlpha(1f);
-        }
+
         //proceed to upkeep player 1
         if (turn == 1 && phaseTracker == 8){
             pcMainPhaseP2.setAlpha(0.3f);
