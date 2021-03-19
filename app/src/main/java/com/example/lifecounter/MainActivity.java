@@ -477,7 +477,6 @@ public class MainActivity extends AppCompatActivity {
                 endStepP2.setAlpha(1f);
             }
         }
-
     }
 
     public void reset(View view){
@@ -489,15 +488,11 @@ public class MainActivity extends AppCompatActivity {
 
         buttonPause.setVisibility(View.INVISIBLE);
         buttonRollDice.setVisibility(View.VISIBLE);
-
         buttonResume.setVisibility(View.INVISIBLE);
-
         buttonReset.setEnabled(false);
         buttonReset.setVisibility(View.INVISIBLE);
-
         buttonTimerDown.setVisibility(View.VISIBLE);
         buttonTimerUp.setVisibility(View.VISIBLE);
-
     }
 
     //up and down by 1 minute for both players
