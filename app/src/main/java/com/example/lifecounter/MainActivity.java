@@ -183,14 +183,7 @@ public class MainActivity extends AppCompatActivity {
         button2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                buttonReset.setVisibility(View.VISIBLE);
-                buttonReset.setEnabled(true);
-                buttonTimerDown.setVisibility(View.INVISIBLE);
-                buttonTimerUp.setVisibility(View.INVISIBLE);
-                buttonResume.setVisibility(View.INVISIBLE);
-                buttonRollDice.setVisibility(View.INVISIBLE);
-                buttonPause.setEnabled(true);
-                buttonPause.setVisibility(View.VISIBLE);
+                prepareBattlefieldOnStart(v);
                 //if player 1 starts do the following
                 if (turn == 0){
                     button2.setText("END PHASE");
@@ -199,6 +192,7 @@ public class MainActivity extends AppCompatActivity {
                 }
                 //if game is going on do the following
                 else {
+                    prepareBattlefieldOnResume(v);
                     phaseTracker = phaseTracker + 0.5;
                 }
                 proceedPhase();
@@ -220,14 +214,7 @@ public class MainActivity extends AppCompatActivity {
         button1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                buttonReset.setVisibility(View.VISIBLE);
-                buttonReset.setEnabled(true);
-                buttonTimerDown.setVisibility(View.INVISIBLE);
-                buttonTimerUp.setVisibility(View.INVISIBLE);
-                buttonResume.setVisibility(View.INVISIBLE);
-                buttonRollDice.setVisibility(View.INVISIBLE);
-                buttonPause.setVisibility(View.VISIBLE);
-                buttonPause.setEnabled(true);
+                prepareBattlefieldOnStart(v);
                 //if player 2 starts do the following
                 if (turn == 0){
                     button2.setText("END PHASE");
@@ -236,6 +223,7 @@ public class MainActivity extends AppCompatActivity {
                 }
                 //if game is going on do the following
                 else {
+                    prepareBattlefieldOnResume(v);
                     phaseTracker = phaseTracker + 0.5;
                 }
                 proceedPhase();
@@ -277,11 +265,26 @@ public class MainActivity extends AppCompatActivity {
                 if (turn == 2){
                     player2.resume();
                 }
-                buttonPause.setVisibility(View.VISIBLE);
-                buttonResume.setVisibility(View.INVISIBLE);
-                buttonRollDice.setVisibility(View.INVISIBLE);
+                prepareBattlefieldOnResume(v);
             }
         });
+    }
+
+    public void prepareBattlefieldOnStart(View view){
+        buttonReset.setVisibility(View.VISIBLE);
+        buttonReset.setEnabled(true);
+        buttonTimerDown.setVisibility(View.INVISIBLE);
+        buttonTimerUp.setVisibility(View.INVISIBLE);
+        buttonResume.setVisibility(View.INVISIBLE);
+        buttonRollDice.setVisibility(View.INVISIBLE);
+        buttonPause.setVisibility(View.VISIBLE);
+        buttonPause.setEnabled(true);
+    }
+
+    public void prepareBattlefieldOnResume(View view){
+        buttonPause.setVisibility(View.VISIBLE);
+        buttonResume.setVisibility(View.INVISIBLE);
+        buttonRollDice.setVisibility(View.INVISIBLE);
     }
 
     public void rollDice(View view){
@@ -377,10 +380,7 @@ public class MainActivity extends AppCompatActivity {
 
     //is only available while player is on turn and during phase
     public void passTurn(View view){
-
-        buttonRollDice.setVisibility(View.INVISIBLE);
-        buttonPause.setEnabled(true);
-        buttonPause.setVisibility(View.VISIBLE);
+        prepareBattlefieldOnResume(view);
         if (phaseTracker < 5){
             phaseTracker = 4.5;
             proceedPhase();

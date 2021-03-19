@@ -224,13 +224,9 @@ public class Player {
     }
 
     //getter methods
-    public ProgressBar getProgressBar(){
-        return progressBar;
-    }
+    public ProgressBar getProgressBar(){return progressBar;}
 
-    public long getTime(View view){
-        return time;
-    }
+    public long getTime(View view){return time;}
 
     public TextView getCountDownText(){return countDownText;}
 }
