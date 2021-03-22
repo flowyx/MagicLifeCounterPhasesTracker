@@ -59,7 +59,7 @@ public class Player {
         progressBar = progress;
         progressBar.setMax((int) time);
         progressBar.setProgress((int) time);
-
+        countDownText.setText(updateText(time));
         playerID = ID;
 
         //set initial image state alphas
@@ -218,16 +218,12 @@ public class Player {
     }
 
     //setter methods
-    public void setTime(long timer){
-        time = timer;
+    public void setTime2(boolean isUp){
+        time = isUp? time + 60000: time - 60000;
         countDownText.setText(updateText(time));
+        progressBar.setMax((int) time);
+        progressBar.setProgress((int) time);
     }
 
-    //getter methods
-    public ProgressBar getProgressBar(){return progressBar;}
-
-    public long getTime(View view){return time;}
-
-    public TextView getCountDownText(){return countDownText;}
 }
 

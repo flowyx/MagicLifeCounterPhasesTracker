@@ -1,6 +1,7 @@
 package com.example.lifecounter;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.app.AppCompatDelegate;
 
 import android.graphics.Color;
 import android.os.Bundle;
@@ -16,7 +17,6 @@ import android.widget.TextView;
 import java.util.Random;
 
 public class MainActivity extends AppCompatActivity {
-
 
     //Life
     TextView lifePlayer1;
@@ -43,31 +43,22 @@ public class MainActivity extends AppCompatActivity {
     private ImageView imageViewDicePlayer2;
     Button buttonRollDice;
 
-
     //Timer variables
     private ProgressBar progressBarP1;
     private ProgressBar progressBarP2;
     private TextView countDownP1Text;
     private TextView countDownP2Text;
-    Button button1;
-    Button button2;
+    Button buttonNextPhase1;
+    Button buttonNextPhase2;
+    Button buttonPassTurnP1;
+    Button buttonPassTurnP2;
     Button buttonPause;
     Button buttonReset;
     Button buttonResume;
-    Button buttonPassTurnP1;
-    Button buttonPassTurnP2;
+
     ImageButton buttonTimerUp;
     ImageButton buttonTimerDown;
     private int turn = 0;
-
-    private long p2Time;
-    private long p1Time;
-
-    private long original = 30*60000;
-    private long countDownTime = original;
-
-    private CountDownTimer p2Timer;
-    private CountDownTimer p1Timer;
 
     public Player player1;
     public Player player2;
@@ -110,6 +101,9 @@ public class MainActivity extends AppCompatActivity {
         //don't fall asleep
         getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
 
+        //no dark theme
+        AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
+
         //set up dice
         imageViewDicePlayer1 = findViewById(R.id.image_view_dice_player1);
         imageViewDicePlayer2 = findViewById(R.id.image_view_dice_player2);
@@ -120,25 +114,20 @@ public class MainActivity extends AppCompatActivity {
         //count down set up
         countDownP1Text = findViewById(R.id.count_down_p1);
         countDownP2Text = findViewById(R.id.count_down_p2);
-        p1Time = original;
-        p2Time = original;
 
         //--> findViewElementsById()
         buttonTimerUp = findViewById(R.id.timerUp);
         buttonTimerDown = findViewById(R.id.timerDown);
 
-
         //Progress bar set up
         progressBarP1 = findViewById(R.id.progressBar_Player1);
-
         progressBarP2 = findViewById(R.id.progressBar_Player2);
 
-
         //set up control buttons
-        button1 = findViewById(R.id.button1);
-        button2 = findViewById(R.id.button2);
-        button1.setBackgroundColor(Color.parseColor("#0067b3"));
-        button2.setBackgroundColor(Color.parseColor("#0067b3"));
+        buttonNextPhase1 = findViewById(R.id.button1);
+        buttonNextPhase2 = findViewById(R.id.button2);
+        buttonNextPhase1.setBackgroundColor(Color.parseColor("#0067b3"));
+        buttonNextPhase2.setBackgroundColor(Color.parseColor("#0067b3"));
         buttonPause = findViewById(R.id.button_Pause);
         buttonPause.setVisibility(View.INVISIBLE);
         buttonPause.setEnabled(false);
@@ -157,11 +146,11 @@ public class MainActivity extends AppCompatActivity {
         buttonPassTurnP2.setTextColor(Color.parseColor("#000000"));
 
         Button[] buttonsP1 = new Button[2];
-        buttonsP1[0] = button1;
+        buttonsP1[0] = buttonNextPhase1;
         buttonsP1[1] = buttonPassTurnP1;
 
         Button[] buttonsP2 = new Button[2];
-        buttonsP2[0] = button2;
+        buttonsP2[0] = buttonNextPhase2;
         buttonsP2[1] = buttonPassTurnP2;
 
         //life set up
@@ -180,14 +169,14 @@ public class MainActivity extends AppCompatActivity {
         player2 = new Player(2, imageViewsP2, buttonsP2, textViewsP2, progressBarP2);
 
         //Starts countdown for player1  (When player 2 clicks)
-        button2.setOnClickListener(new View.OnClickListener() {
+        buttonNextPhase2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 prepareBattlefieldOnStart(v);
                 //if player 1 starts do the following
                 if (turn == 0){
-                    button2.setText("END PHASE");
-                    button1.setText("END PHASE");
+                    buttonNextPhase2.setText("END PHASE");
+                    buttonNextPhase1.setText("END PHASE");
                     phaseTracker = 1;
                 }
                 //if game is going on do the following
@@ -211,14 +200,14 @@ public class MainActivity extends AppCompatActivity {
         });
 
         //Starts countdown for player2  (When player 1 clicks)
-        button1.setOnClickListener(new View.OnClickListener() {
+        buttonNextPhase1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 prepareBattlefieldOnStart(v);
                 //if player 2 starts do the following
                 if (turn == 0){
-                    button2.setText("END PHASE");
-                    button1.setText("END PHASE");
+                    buttonNextPhase2.setText("END PHASE");
+                    buttonNextPhase1.setText("END PHASE");
                     phaseTracker = 4.5;
                 }
                 //if game is going on do the following
@@ -482,8 +471,6 @@ public class MainActivity extends AppCompatActivity {
     public void reset(View view){
         player1.reset(view);
         player2.reset(view);
-
-        countDownTime = original;
         turn = 0;
 
         buttonPause.setVisibility(View.INVISIBLE);
@@ -497,21 +484,13 @@ public class MainActivity extends AppCompatActivity {
 
     //up and down by 1 minute for both players
     public void playersTimeUp(View view){
-        timerHandling(true);
+        player1.setTime2(true);
+        player2.setTime2(true);
     }
 
     public void playersTimeDown(View view){
-        timerHandling(false);
-    }
-
-    public void timerHandling(boolean isUp){
-        countDownTime = isUp? countDownTime + 60000: countDownTime - 60000;
-        player1.setTime(countDownTime);
-        player2.setTime(countDownTime);
-        player1.getProgressBar().setMax((int) countDownTime);
-        player1.getProgressBar().setProgress((int) countDownTime);
-        player2.getProgressBar().setMax((int) countDownTime);
-        player2.getProgressBar().setProgress((int) countDownTime);
+        player1.setTime2(false);
+        player2.setTime2(false);
     }
 
     public void player1LifeUp(View view){
@@ -529,5 +508,4 @@ public class MainActivity extends AppCompatActivity {
     public void player2LifeDown(View view){
         player2.lifeDown(view);
     }
-
 }
